@@ -11,6 +11,7 @@ private:
 public:
 	Item(string names = NULL, string des = NULL);
 	virtual void ShowItemInfo();
+	virtual void ShowItemDetailInfo();
 };
 
 class Armor : public Item
@@ -22,5 +23,6 @@ private:
 public:
 	Armor(string names, string des, int hp = 0, int mp = 0, int atk = 0);
 	virtual void ShowItemInfo();
+	virtual void ShowItemDetailInfo();
 };
 #endif

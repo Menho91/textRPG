@@ -14,6 +14,6 @@ public:
 	Village(string names, int ord);
 	void Heal(Player& user);
 	void Interact(Player& user, Character& npc);
-	void Sale(Player& user, Item& tem);
+	void Sale(Player& user, Item* itemlist);
 };
 #endif

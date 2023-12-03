@@ -5,6 +5,25 @@ Character::Character(string& names)
 { }
 
 
+NPC::NPC(string& names, Conversation& conv)
+	: Character(names), talk(conv)
+{ }
+
+void NPC::StartConversation()
+{
+	int choice;
+	cout << name << " : " << talk.GetPrompt() << endl;
+	for (int i = 0; i < talk.GetOption().size(); i++)
+	{
+		cout << i + 1 << " : " << talk.GetOption()[i] << " ";
+	}
+	cout << endl << "¼±ÅÃ : ";
+	cin >> choice;
+	talk.SetChoice(choice);
+	cout << name << " : " << talk.GetEnding() << endl;
+}
+
+
 Player::Player(string& names, int hp, int mhp, int mp, int mmp, int atk, int lev)
 	: Character(names), health(hp), maxHP(mhp), magic(mp), maxMP(mmp), attack(atk), level(lev)
 { }

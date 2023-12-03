@@ -2,13 +2,23 @@
 #define __CHARACTER_H_
 
 #include "CommonInclude.h"
+#include "Conversation.h"
 
 class Character
 {
-private:
+protected:
 	string name;
 public:
 	Character(string& names);
+};
+
+class NPC : public Character
+{
+private:
+	Conversation talk;
+public:
+	NPC(string& names, Conversation& conv);
+	void StartConversation();
 };
 
 class Player : public Character

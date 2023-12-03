@@ -1,6 +1,6 @@
 #include "Village.h"
 
-Village::Village(string names, int ord)
+Village::Village(string& names, int ord)
 	: name(names), order(ord)
 { }
 

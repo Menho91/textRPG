@@ -1,6 +1,6 @@
 #include "Item.h"
 
-Item::Item(string names, string des)
+Item::Item(string& names, string& des)
 	: name(names), description(des)
 { }
 
@@ -16,7 +16,7 @@ void Item::ShowItemDetailInfo()
 }
 
 
-Armor::Armor(string names, string des, int hp, int mp, int atk)
+Armor::Armor(string& names, string& des, int hp, int mp, int atk)
 	: Item(names, des), shiftHP(hp), shiftMP(mp), shiftATK(atk)
 { }
 

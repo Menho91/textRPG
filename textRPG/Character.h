@@ -8,7 +8,7 @@ class Character
 private:
 	string name;
 public:
-	Character(string names);
+	Character(string& names);
 };
 
 class Player : public Character
@@ -21,7 +21,7 @@ private:
 	int attack;
 	int level;
 public:
-	Player(string names, int hp = 0, int mhp = 10, int mp = 0, int mmp = 10, int atk = 1, int lev = 1);
+	Player(string& names, int hp = 0, int mhp = 10, int mp = 0, int mmp = 10, int atk = 1, int lev = 1);
 	void HealHP(int hp);
 	void HealMP(int mp);
 };
@@ -35,6 +35,6 @@ private:
 	int maxMP;
 	int attack;
 public:
-	Monster(string names, int hp, int mhp, int mp, int mmp, int atk);
+	Monster(string& names, int hp, int mhp, int mp, int mmp, int atk);
 };
 #endif

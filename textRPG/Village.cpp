@@ -10,9 +10,9 @@ void Village::Heal(Player& user)
 	user.HealMP(9999);
 }
 
-void Village::Interact(Player& user, Character& npc)
+void Village::Interact(Player& user, NPC& npc)
 {
-	
+	npc.StartConversation();
 }
 
 void Village::Sale(Player& user, Item* itemlist)

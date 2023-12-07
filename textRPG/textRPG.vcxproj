@@ -132,12 +132,14 @@
     <ClCompile Include="FileName.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="RPGMain.cpp" />
+    <ClCompile Include="System.cpp" />
     <ClCompile Include="Village.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Conversation.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="Village.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -13,7 +13,7 @@ private:
 public:
 	Village(string& names, int ord);
 	void Heal(Player& user);
-	void Interact(Player& user, Character& npc);
+	void Interact(Player& user, NPC& npc);
 	void Sale(Player& user, Item* itemlist);
 };
 #endif

@@ -129,7 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CommonInclude.h" />
-    <ClCompile Include="FileName.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="RPGMain.cpp" />
     <ClCompile Include="System.cpp" />
@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Conversation.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Village.h" />

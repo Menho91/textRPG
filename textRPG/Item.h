@@ -6,10 +6,10 @@
 class Item
 {
 private:
-	string name;
-	string description;
+	const string name;
+	const string description;
 public:
-	Item(string& names = NULL, string& des = NULL);
+	Item(const string& names = NULL, const string& des = NULL);
 	virtual void ShowItemInfo();
 	virtual void ShowItemDetailInfo();
 };
@@ -21,7 +21,7 @@ private:
 	int shiftMP;
 	int shiftATK;
 public:
-	Armor(string& names, string& des, int hp = 0, int mp = 0, int atk = 0);
+	Armor(const string& names, const string& des, int hp = 0, int mp = 0, int atk = 0);
 	virtual void ShowItemInfo();
 	virtual void ShowItemDetailInfo();
 };

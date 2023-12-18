@@ -4,16 +4,13 @@
 #include "CommonInclude.h"
 #include "Item.h"
 
-const int INVENTORY_SIZE = 10;
-
 class Inventory
 {
 private:
-	Item arr[INVENTORY_SIZE];
-	int itemCount;
+	vector<Item> arr;
 public:
-	Inventory();
-	bool AddItem(Item itm);
+	void AddItem(const Item& itm);
+	bool RemoveItem(int index);
 	void ShowInventory();
 };
 #endif

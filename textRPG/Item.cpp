@@ -16,6 +16,7 @@ void Item::ShowItemDetailInfo()
 }
 
 
+
 Armor::Armor(const string& names, const string& des, int hp, int mp, int atk)
 	: Item(names, des), shiftHP(hp), shiftMP(mp), shiftATK(atk)
 { }

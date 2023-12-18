@@ -11,7 +11,7 @@ private:
 	string ending;
 	int choice;
 public:
-	Conversation(string& start, vector<string>& options, string& end)
+	Conversation(const string& start, const vector<string>& options = {}, const string& end = NULL)
 		: prompt(start), option(options), ending(end), choice(0)
 	{ }
 	string GetPrompt() const

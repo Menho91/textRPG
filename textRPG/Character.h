@@ -4,6 +4,7 @@
 #include "CommonInclude.h"
 #include "Conversation.h"
 #include "Item.h"
+#include "Inventory.h"
 
 class Character
 {
@@ -31,7 +32,7 @@ private:
 	int maxMP;
 	int attack;
 	int level;
-	Item inventory[10];
+	Inventory inven;
 public:
 	Player(string& names, int hp = 0, int mhp = 10, int mp = 0, int mmp = 10, int atk = 1, int lev = 1);
 	void HealHP(int hp);

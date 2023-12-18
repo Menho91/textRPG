@@ -6,8 +6,8 @@
 class Item
 {
 private:
-	const string name;
-	const string description;
+	string name;
+	string description;
 public:
 	Item(const string& names = NULL, const string& des = NULL);
 	virtual void ShowItemInfo();

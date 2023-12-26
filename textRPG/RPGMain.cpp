@@ -15,9 +15,13 @@ int main(void)
 		switch (choice)
 		{
 		case 1:
-			cout << "시작합니다." << endl;
-			Prologue();
-			break;
+			{
+				cout << "시작합니다." << endl << endl;
+				Player player = NewPlayer();
+				Prologue(player);
+				test(player);
+				break;
+			}
 		case 2:
 			cout << "종료합니다." << endl;
 			return 0;

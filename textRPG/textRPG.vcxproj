@@ -131,7 +131,7 @@
     <ClCompile Include="CommonInclude.h" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="probability.h" />
+    <ClCompile Include="Probability.h" />
     <ClCompile Include="RPGMain.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Village.cpp" />

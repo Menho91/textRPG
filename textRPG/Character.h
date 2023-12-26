@@ -9,9 +9,10 @@
 class Character
 {
 protected:
-	string name;
+	const string name;
 public:
-	Character(string& names);
+	Character(const string& names);
+	const string& GetName() const;
 };
 
 class NPC : public Character
@@ -19,7 +20,7 @@ class NPC : public Character
 private:
 	Conversation talk;
 public:
-	NPC(string& names, Conversation& conv);
+	NPC(const string& names, Conversation& conv);
 	void StartConversation();
 };
 
@@ -33,26 +34,35 @@ protected:
 	int attack;
 	bool isDead;
 public:
-	PC(string& names, int hp = 10, int mhp = 10, int mp = 10, int mmp = 10, int atk = 1);
-	bool GetIsDead();
+	PC(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
+	bool GetIsDead() const;
 	void Attack(PC& pc);
-	void Fight(PC& pc1, PC& pc2);
+	virtual void ShowInfo() const;
 };
 
 class Player : public PC
 {
 private:
+	int exp;
 	int level;
+	int currentVillage;
 	Inventory inven;
 public:
-	Player(string& names, int hp = 10, int mhp = 10, int mp = 10, int mmp = 10, int atk = 1, int lev = 1);
+	Player(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
 	void HealHP(int hp);
 	void HealMP(int mp);
+	void IncreaseExp(int value);
+	void Fight(Monster& enemy);
+	int GetCurrentVillage() const;
+	virtual void ShowInfo() const;
 };
 
 class Monster : public PC
 {
+private:
+	int givingExp;
 public:
-	Monster(string& names, int hp = 10, int mhp = 10, int mp = 10, int mmp = 10, int atk = 1);
+	Monster(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
+	int GetGivingExp() const;
 };
 #endif

@@ -1,7 +1,5 @@
 #include "CommonInclude.h"
-#include "Character.h"
-#include "Item.h"
-#include "Village.h"
+#include "System.h"
 
 int main(void)
 {
@@ -18,6 +16,7 @@ int main(void)
 		{
 		case 1:
 			cout << "시작합니다." << endl;
+			Prologue();
 			break;
 		case 2:
 			cout << "종료합니다." << endl;

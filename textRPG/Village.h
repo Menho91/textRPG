@@ -10,8 +10,9 @@ class Village
 private:
 	string name;
 	int order;
+	int road;
 public:
-	Village(string& names, int ord);
+	Village(string& names, int ord, int roadnum);
 	void Heal(Player& user);
 	void Interact(Player& user, NPC& npc);
 	void Sale(Player& user, Item* itemlist);

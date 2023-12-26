@@ -23,31 +23,36 @@ public:
 	void StartConversation();
 };
 
-class Player : public Character
+class PC : public Character
 {
-private:
+protected:
 	int health;
 	int maxHP;
 	int magic;
 	int maxMP;
 	int attack;
+	bool isDead;
+public:
+	PC(string& names, int hp = 10, int mhp = 10, int mp = 10, int mmp = 10, int atk = 1);
+	bool GetIsDead();
+	void Attack(PC& pc);
+	void Fight(PC& pc1, PC& pc2);
+};
+
+class Player : public PC
+{
+private:
 	int level;
 	Inventory inven;
 public:
-	Player(string& names, int hp = 0, int mhp = 10, int mp = 0, int mmp = 10, int atk = 1, int lev = 1);
+	Player(string& names, int hp = 10, int mhp = 10, int mp = 10, int mmp = 10, int atk = 1, int lev = 1);
 	void HealHP(int hp);
 	void HealMP(int mp);
 };
 
-class Monster : public Character
+class Monster : public PC
 {
-private:
-	int health;
-	int maxHP;
-	int magic;
-	int maxMP;
-	int attack;
 public:
-	Monster(string& names, int hp, int mhp, int mp, int mmp, int atk);
+	Monster(string& names, int hp = 10, int mhp = 10, int mp = 10, int mmp = 10, int atk = 1);
 };
 #endif

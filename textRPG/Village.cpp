@@ -1,7 +1,7 @@
 #include "Village.h"
 
-Village::Village(string& names, int ord)
-	: name(names), order(ord)
+Village::Village(string& names, int ord, int roadnum)
+	: name(names), order(ord), road(roadnum)
 { }
 
 void Village::Heal(Player& user)

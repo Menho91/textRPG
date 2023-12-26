@@ -1,8 +1,16 @@
 #include "Inventory.h"
 
-void Inventory::AddItem(const Item& itm)
+void Inventory::AddItem(const Item& itm, int quant)
 {
-	arr.push_back(itm);
+	for (InventoryItem& i : arr)
+	{
+		if (i.item.GetName() == itm.GetName())
+		{
+			i.quantity += quant;
+			return;
+		}
+	}
+	arr.emplace_back(itm, quant);
 }
 
 bool Inventory::RemoveItem(int index)
@@ -11,7 +19,7 @@ bool Inventory::RemoveItem(int index)
 	{
 		return false;
 	}
-	arr[index].ShowItemInfo();
+	arr[index].item.ShowItemInfo();
 	arr.erase(arr.begin() + index);
 	return true;
 }
@@ -22,7 +30,8 @@ void Inventory::ShowInventory()
 	for (int i = 0; i < arr.size(); i++)
 	{
 		cout << i + 1 << ". ";
-		arr[i].ShowItemInfo();
+		arr[i].item.ShowItemInfo();
+		cout << " " << arr[i].quantity << "°³" << endl;
 	}
 	cout << endl;
 }

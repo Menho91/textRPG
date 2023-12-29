@@ -17,9 +17,10 @@ int main(void)
 		case 1:
 			{
 				cout << "시작합니다." << endl << endl;
-				Player player = NewPlayer();
-				Prologue(player);
-				test(player);
+				Player* player1 = NewPlayer();
+				Prologue(*player1);
+				test(*player1);
+				delete player1;
 				break;
 			}
 		case 2:
@@ -27,7 +28,7 @@ int main(void)
 			return 0;
 		default:
 			cout << "유효하지 않은 숫자입니다. 다시 입력해주세요." << endl;
-			break;
+			throw -1;
 		}
 	}
 	return 0;

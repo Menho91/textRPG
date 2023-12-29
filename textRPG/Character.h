@@ -4,15 +4,15 @@
 #include "CommonInclude.h"
 #include "Conversation.h"
 #include "Item.h"
-#include "Inventory.h"
+#include "Probability.h"
 
 class Character
 {
-protected:
-	const string name;
+private:
+	string name;
 public:
 	Character(const string& names);
-	const string& GetName() const;
+	const string& GetName() const { return name; }
 };
 
 class NPC : public Character
@@ -35,7 +35,8 @@ protected:
 	bool isDead;
 public:
 	PC(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
-	bool GetIsDead() const;
+	int GetMaxHP() const { return maxHP; }
+	bool GetIsDead() const { return isDead; }
 	void Attack(PC& pc);
 	virtual void ShowInfo() const;
 };
@@ -48,21 +49,19 @@ private:
 	int currentVillage;
 	Inventory inven;
 public:
-	Player(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
+	Player(const string& names, int mhp = 20, int mmp = 20, int atk = 2);
 	void HealHP(int hp);
 	void HealMP(int mp);
 	void IncreaseExp(int value);
-	void Fight(Monster& enemy);
-	int GetCurrentVillage() const;
+	void LevelUP();
+	void Fight(PC& enemy);
+	int GetCurrentVillage() const { return currentVillage; }
 	virtual void ShowInfo() const;
 };
 
 class Monster : public PC
 {
-private:
-	int givingExp;
 public:
 	Monster(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
-	int GetGivingExp() const;
 };
 #endif

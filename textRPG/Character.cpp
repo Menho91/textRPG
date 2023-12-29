@@ -1,14 +1,8 @@
 #include "Character.h"
-#include "Probability.h"
 
 Character::Character(const string& names)
 	: name(names)
 { }
-
-const string& Character::GetName() const
-{
-	return name;
-}
 
 
 NPC::NPC(const string& names, Conversation& conv)
@@ -18,7 +12,7 @@ NPC::NPC(const string& names, Conversation& conv)
 void NPC::StartConversation()
 {
 	int choice;
-	cout << name << " : " << talk.GetPrompt() << endl;
+	cout << GetName() << " : " << talk.GetPrompt() << endl;
 	for (int i = 0; i < talk.GetOption().size(); i++)
 	{
 		cout << i + 1 << " : " << talk.GetOption()[i] << " ";
@@ -26,7 +20,7 @@ void NPC::StartConversation()
 	cout << endl << "선택 : ";
 	cin >> choice;
 	talk.SetChoice(choice);
-	cout << name << " : " << talk.GetEnding() << endl;
+	cout << GetName() << " : " << talk.GetEnding() << endl;
 }
 
 
@@ -34,29 +28,26 @@ PC::PC(const string& names, int mhp, int mmp, int atk)
 	: Character(names), health(mhp), maxHP(mhp), magic(mmp), maxMP(mmp), attack(atk), isDead(false)
 { }
 
-bool PC::GetIsDead() const
-{
-	return isDead;
-}
-
 void PC::Attack(PC& pc)
 {
 	Probability p;
+	cout << GetName() << "의 차례" << endl;
 	if (p(30))
 	{
-		pc.health -= attack * 1.5;
-		cout << pc.name << attack * 1.5 << "만큼 공격! " << pc.name << " 남은 HP " << pc.health << endl;
+		pc.health -= attack * 2;
+		cout << pc.GetName() << " " << attack * 2 << "만큼 공격! ";
 	}
 	else
 	{
 		pc.health -= attack;
-		cout << pc.name << attack << "만큼 공격, " << pc.name << " 남은 HP " << pc.health << endl;
+		cout << pc.GetName() << " " << attack << "만큼 공격, ";
 	}
 	if (pc.health <= 0)
 	{
 		pc.isDead = true;
 		pc.health = 0;
 	}
+	cout << pc.GetName() << " 남은 HP " << pc.health << endl;
 }
 
 void PC::ShowInfo() const
@@ -74,8 +65,9 @@ void Player::HealHP(int hp)
 {
 	if (health + hp > maxHP)
 	{
-		cout << "체력이 " << maxHP - health << " 회복되었습니다. 현재 체력 : " << health << endl;
+		cout << "체력이 " << maxHP - health << " 회복되었습니다. ";
 		health = maxHP;
+		cout << "현재 체력 : " << health << endl;
 		return;
 	}
 	health += hp;
@@ -96,44 +88,48 @@ void Player::HealMP(int mp)
 
 void Player::IncreaseExp(int value)
 {
-	cout << value << " 경험치를 획득했다." << endl;
+	cout << value << " 경험치를 획득했습니다." << endl;
 	exp += value;
 	if (exp >= 100 + ((level - 1) * 10))
 	{
-		exp -= 100 + ((level - 1) * 10);
-		level += 1;
-		cout << "레벨업 했습니다." << endl;
+		LevelUP();
 	}
-	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl;
+	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl << endl;
 }
 
-void Player::Fight(Monster& enemy)
+void Player::LevelUP()
 {
-	while (isDead && enemy.GetIsDead())
+	exp -= 100 + ((level - 1) * 10);
+	level += 1;
+	cout << "레벨업 했습니다." << endl;
+	maxHP += 10;
+	maxMP += 10;
+	HealHP(maxHP);
+	HealMP(maxMP);
+}
+
+void Player::Fight(PC& enemy)
+{
+	while (!(isDead) && !(enemy.GetIsDead()))
 	{
-		cout << name << "의 차례" << endl;
 		Attack(enemy);
 		if (enemy.GetIsDead())
 			break;
-		cout << enemy.GetName() << "의 차례" << endl;
 		enemy.Attack(*this);
+		cout << endl;
 	}
-	cout << "전투가 끝났습니다." << endl;
+	cout << "전투가 끝났습니다." << endl << endl;
 	if (enemy.GetIsDead())
 	{
-		IncreaseExp(enemy.GetGivingExp());
+		IncreaseExp(enemy.GetMaxHP() * 2);
 	}
 	else
 	{
-		cout << "마지막으로 방문한 마을에서 부활합니다." << endl;
-		HealHP(1);
+		cout << "죽었습니다. 마지막으로 방문한 마을에서 부활합니다." << endl << endl;
+		health = 1;
 	}
 }
 
-int Player::GetCurrentVillage() const
-{
-	return currentVillage;
-}
 
 void Player::ShowInfo() const
 {
@@ -143,10 +139,5 @@ void Player::ShowInfo() const
 
 
 Monster::Monster(const string& names, int mhp, int mmp, int atk)
-	: PC(names, mhp, mmp, atk), givingExp(health * 1.5)
+	: PC(names, mhp, mmp, atk)
 { }
-
-int Monster::GetGivingExp() const
-{
-	return givingExp;
-}

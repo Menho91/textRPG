@@ -5,14 +5,14 @@
 #include "Conversation.h"
 #include "Character.h"
 
-Player& NewPlayer(void)
+Player* NewPlayer(void)
 {
 	string temp;
 	cout << "새 캐릭터를 생성합니다." << endl;
 	cout << "캐릭터 이름을 입력하세요." << endl;
 	cout << "입력 : "; cin >> temp;
-	Player player(temp);
-	cout << player.GetName() << " 캐릭터가 생성되었습니다." << endl << endl;
+	Player* player = new Player(temp);
+	cout << player->GetName() << " 캐릭터가 생성되었습니다." << endl << endl;
 	return player;
 }
 
@@ -25,9 +25,11 @@ void Prologue(Player& player)
 
 void test(Player& player)
 {
-	for (int i = 0; i < 3; i++)
+	int i = 0;
+	while (!player.GetIsDead() && i < 13)
 	{
-		Monster mon("이름 모를 병사", 5, 5, 1);
+		i++;
+		Monster mon("이름 모를 병사");
 		player.Fight(mon);
 	}
 }

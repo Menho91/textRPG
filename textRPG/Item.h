@@ -10,7 +10,7 @@ private:
 	string description;
 public:
 	Item(const string& names = NULL, const string& des = NULL);
-	const string& GetName() const;
+	const string& GetName() const { return name; }
 	virtual void ShowItemInfo() const;
 	virtual void ShowItemDetailInfo() const;
 };
@@ -27,8 +27,28 @@ public:
 	virtual void ShowItemDetailInfo() const;
 };
 
-
 extern Item hunting_token;
 extern Armor basic_sword;
 extern Armor basic_armor;
+
+
+struct InventoryItem
+{
+	Item item;
+	int quantity;
+
+	InventoryItem(const Item& itm, int quant)
+		: item(itm), quantity(quant)
+	{ }
+};
+
+class Inventory
+{
+private:
+	vector<InventoryItem> arr;
+public:
+	void AddItem(const Item& itm, int quant = 1);
+	bool RemoveItem(int index);
+	void ShowInventory();
+};
 #endif

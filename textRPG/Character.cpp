@@ -58,7 +58,7 @@ void PC::ShowInfo() const
 
 
 Player::Player(const string& names, int mhp, int mmp, int atk)
-	: PC(names, mhp, mmp, atk), exp(0), level(1), currentVillage(1)
+	: PC(names, mhp, mmp, atk), gold(0), exp(0), level(1), currentVillage(1)
 { }
 
 void Player::HealHP(int hp)
@@ -86,6 +86,13 @@ void Player::HealMP(int mp)
 	cout << "마나가 " << mp << " 회복되었습니다. 현재 마나 : " << magic << endl;
 }
 
+void Player::IncreaseGold(int value)
+{
+	cout << value << " 골드를 획득했습니다." << endl;
+	gold += value;
+	cout << "현재 골드 : " << gold << endl << endl;
+}
+
 void Player::IncreaseExp(int value)
 {
 	cout << value << " 경험치를 획득했습니다." << endl;
@@ -95,6 +102,21 @@ void Player::IncreaseExp(int value)
 		LevelUP();
 	}
 	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl << endl;
+}
+
+bool Player::DecreaseGold(int value)
+{
+	if (gold < value)
+	{
+		cout << "골드가 부족합니다. 현재 골드 : " << gold << endl;
+		return false;
+	}
+	else
+	{
+		gold -= value;
+		cout << value << " 골드를 차감했습니다. 남은 골드 : " << gold << endl;
+		return true;
+	}
 }
 
 void Player::LevelUP()
@@ -121,7 +143,8 @@ void Player::Fight(PC& enemy)
 	cout << "전투가 끝났습니다." << endl << endl;
 	if (enemy.GetIsDead())
 	{
-		IncreaseExp(enemy.GetMaxHP() * 2);
+		IncreaseExp(enemy.GetGivingExp());
+		IncreaseGold(enemy.GetGivingGold());
 	}
 	else
 	{
@@ -130,6 +153,10 @@ void Player::Fight(PC& enemy)
 	}
 }
 
+void Player::SetCurrentVillage(int order)
+{
+	currentVillage = order;
+}
 
 void Player::ShowInfo() const
 {
@@ -140,4 +167,8 @@ void Player::ShowInfo() const
 
 Monster::Monster(const string& names, int mhp, int mmp, int atk)
 	: PC(names, mhp, mmp, atk)
-{ }
+{
+	Probability p;
+	givingGold = (mhp * 50) + p();
+	givingExp = mhp * 2 + p();
+}

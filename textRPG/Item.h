@@ -8,10 +8,13 @@ class Item
 private:
 	string name;
 	string description;
+	int value;
 public:
-	Item(const string& names = NULL, const string& des = NULL);
+	Item(const string& names = NULL, const string& des = NULL, int cost = 0);
 	const string& GetName() const { return name; }
+	int GetValue() const { return value; }
 	virtual void ShowItemInfo() const;
+	virtual void ShowItemSalesInfo() const;
 	virtual void ShowItemDetailInfo() const;
 };
 
@@ -22,8 +25,9 @@ private:
 	int shiftMP;
 	int shiftATK;
 public:
-	Armor(const string& names, const string& des, int hp = 0, int mp = 0, int atk = 0);
+	Armor(const string& names, const string& des, int hp = 0, int mp = 0, int atk = 0, int cost = 0);
 	virtual void ShowItemInfo()const ;
+	virtual void ShowItemSalesInfo() const;
 	virtual void ShowItemDetailInfo() const;
 };
 

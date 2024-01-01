@@ -11,10 +11,13 @@ private:
 	string name;
 	int order;
 	int road;
+	vector<Item> itemlist;
+	NPC villager;
 public:
-	Village(string& names, int ord, int roadnum);
+	Village(const string& names, int ord, int roadnum, vector<Item> items, NPC person);
+	void Visit(Player& user);
 	void Heal(Player& user);
-	void Interact(Player& user, NPC& npc);
-	void Sale(Player& user, Item* itemlist);
+	void Interact(Player& user);
+	void Sale(Player& user);
 };
 #endif

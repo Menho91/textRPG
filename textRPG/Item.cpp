@@ -1,13 +1,18 @@
 #include "Item.h"
 
-Item::Item(const string& names, const string& des)
-	: name(names), description(des)
+Item::Item(const string& names, const string& des, int cost)
+	: name(names), description(des), value(cost)
 { }
 
 
 void Item::ShowItemInfo() const
 {
 	cout << "[" << name << "]" << endl;
+}
+
+void Item::ShowItemSalesInfo() const
+{
+	cout << "[" << name << "] : " << value << "골드" << endl;
 }
 
 void Item::ShowItemDetailInfo() const
@@ -18,13 +23,19 @@ void Item::ShowItemDetailInfo() const
 
 
 
-Armor::Armor(const string& names, const string& des, int hp, int mp, int atk)
-	: Item(names, des), shiftHP(hp), shiftMP(mp), shiftATK(atk)
+Armor::Armor(const string& names, const string& des, int hp, int mp, int atk, int cost)
+	: Item(names, des, cost), shiftHP(hp), shiftMP(mp), shiftATK(atk)
 { }
 
 void Armor::ShowItemInfo() const
 {
 	Item::ShowItemInfo();
+	cout << showpos << "HP " << shiftHP << "	MP " << shiftMP << "	ATK " << shiftATK << endl;
+}
+
+void Armor::ShowItemSalesInfo() const
+{
+	Item::ShowItemSalesInfo();
 	cout << showpos << "HP " << shiftHP << "	MP " << shiftMP << "	ATK " << shiftATK << endl;
 }
 
@@ -35,8 +46,8 @@ void Armor::ShowItemDetailInfo() const
 }
 
 Item hunting_token("사냥의 증표", "몬스터를 사냥하면 얻을 수 있는 증표. 10개를 모아서 돌아가자.");
-Armor basic_sword("기본 검", "기본적인 검이다.", 0, 0, 1);
-Armor basic_armor("기본 갑옷", "기본적인 갑옷이다.", 5, 0, 0);
+Armor basic_sword("기본 검", "기본적인 검이다.", 0, 0, 1, 10);
+Armor basic_armor("기본 갑옷", "기본적인 갑옷이다.", 5, 0, 0, 10);
 
 
 void Inventory::AddItem(const Item& itm, int quant)

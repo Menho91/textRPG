@@ -23,5 +23,9 @@ public:
 		else
 			return false;
 	}
+	int operator()()
+	{
+		return (GetRandomNumber() / 5) - 10;
+	}
 };
 #endif

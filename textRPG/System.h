@@ -2,15 +2,15 @@
 #define __SYSTEM_H_
 
 #include "CommonInclude.h"
-#include "Conversation.h"
 #include "Character.h"
+#include "Village.h"
 
 Player* NewPlayer(void)
 {
 	string temp;
 	cout << "새 캐릭터를 생성합니다." << endl;
 	cout << "캐릭터 이름을 입력하세요." << endl;
-	cout << "입력 : "; cin >> temp;
+	cout << "입력 : "; cin >> temp; cin.ignore();
 	Player* player = new Player(temp);
 	cout << player->GetName() << " 캐릭터가 생성되었습니다." << endl << endl;
 	return player;
@@ -23,14 +23,8 @@ void Prologue(Player& player)
 	cout << "막 시작된다." << endl << endl;
 }
 
-void test(Player& player)
+void Start(Player& player)
 {
-	int i = 0;
-	while (!player.GetIsDead() && i < 13)
-	{
-		i++;
-		Monster mon("이름 모를 병사");
-		player.Fight(mon);
-	}
+	dlfqjs.Visit(player);
 }
 #endif

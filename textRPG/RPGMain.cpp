@@ -10,7 +10,7 @@ int main(void)
 		cout << endl;
 		cout << "1. 시작하기" << endl;
 		cout << "2. 종료하기" << endl;
-		cout << "선택 : "; cin >> choice;
+		cout << "선택 : "; cin >> choice; cin.ignore();
 
 		switch (choice)
 		{
@@ -19,7 +19,7 @@ int main(void)
 				cout << "시작합니다." << endl << endl;
 				Player* player1 = NewPlayer();
 				Prologue(*player1);
-				test(*player1);
+				Start(*player1);
 				delete player1;
 				break;
 			}

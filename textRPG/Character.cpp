@@ -5,7 +5,7 @@ Character::Character(const string& names)
 { }
 
 
-NPC::NPC(const string& names, Conversation& conv)
+NPC::NPC(const string& names, Conversation conv)
 	: Character(names), talk(conv)
 { }
 
@@ -13,20 +13,30 @@ void NPC::StartConversation()
 {
 	int choice;
 	cout << GetName() << " : " << talk.GetPrompt() << endl;
-	for (int i = 0; i < talk.GetOption().size(); i++)
+	for (int i = 0; i < talk.GetOptions().size(); i++)
 	{
-		cout << i + 1 << " : " << talk.GetOption()[i] << " ";
+		cout << i + 1 << " : " << talk.GetOptions()[i] << " ";
 	}
-	cout << endl << "선택 : ";
-	cin >> choice;
+	cout << endl << "선택 : "; cin >> choice; cin.ignore();
 	talk.SetChoice(choice);
 	cout << GetName() << " : " << talk.GetEnding() << endl;
 }
+
+NPC garam("가람", Conversation("처음 모험을 시작한다고? 재미있겠네."));
+NPC nara("나라", Conversation("여기까지 왔으면 풋내기는 아니겠네."));
+NPC daeum("다음", Conversation("나도 모험을 떠나고 싶어!"));
+NPC rara("라라", Conversation("이 앞은 강력한 몬스터가 나온다고."));
+NPC mari("마리", Conversation("난 최강이다."));
 
 
 PC::PC(const string& names, int mhp, int mmp, int atk)
 	: Character(names), health(mhp), maxHP(mhp), magic(mmp), maxMP(mmp), attack(atk), isDead(false)
 { }
+
+void PC::SetIsDead(bool dead)
+{
+	isDead = dead;
+}
 
 void PC::Attack(PC& pc)
 {
@@ -132,12 +142,15 @@ void Player::LevelUP()
 
 void Player::Fight(PC& enemy)
 {
+	
 	while (!(isDead) && !(enemy.GetIsDead()))
 	{
 		Attack(enemy);
+		Sleep(1000);
 		if (enemy.GetIsDead())
 			break;
 		enemy.Attack(*this);
+		Sleep(1000);
 		cout << endl;
 	}
 	cout << "전투가 끝났습니다." << endl << endl;

@@ -15,14 +15,22 @@ public:
 	const string& GetName() const { return name; }
 };
 
+
 class NPC : public Character
 {
 private:
 	Conversation talk;
 public:
-	NPC(const string& names, Conversation& conv);
+	NPC(const string& names, Conversation conv);
 	void StartConversation();
 };
+
+extern NPC garam;
+extern NPC nara;
+extern NPC daeum;
+extern NPC rara;
+extern NPC mari;
+
 
 class PC : public Character
 {
@@ -35,14 +43,16 @@ protected:
 	bool isDead;
 public:
 	PC(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
-	virtual int GetGivingGold() const = 0;
-	virtual int GetGivingExp() const = 0;
+	virtual int GetGivingGold() const { return 0; }
+	virtual int GetGivingExp() const { return 0; }
 	int GetMaxHP() const { return maxHP; }
 	int GetMaxMP() const { return maxMP; }
 	bool GetIsDead() const { return isDead; }
+	void SetIsDead(bool dead);
 	void Attack(PC& pc);
 	virtual void ShowInfo() const;
 };
+
 
 class Player : public PC
 {
@@ -66,6 +76,7 @@ public:
 	void SetCurrentVillage(int order);
 	virtual void ShowInfo() const;
 };
+
 
 class Monster : public PC
 {

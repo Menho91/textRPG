@@ -19,5 +19,13 @@ public:
 	void Heal(Player& user);
 	void Interact(Player& user);
 	void Sale(Player& user);
+	void Travel(Player& user, Village& town);
 };
+
+extern Village dlfqjs;
+extern Village dlqjs;
+extern Village tkaqjs;
+extern Village tkqjs;
+extern Village dhqjs;
+extern vector<Village> villageList;
 #endif

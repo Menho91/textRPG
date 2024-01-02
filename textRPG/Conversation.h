@@ -11,14 +11,18 @@ private:
 	string ending;
 	int choice;
 public:
-	Conversation(const string& start, const vector<string>& options = {}, const string& end = NULL)
+	Conversation(const string& start, const vector<string>& options = {""}, const string& end = "")
 		: prompt(start), option(options), ending(end), choice(0)
 	{ }
-	string GetPrompt() const
+	const string& GetPrompt() const
 	{
 		return prompt;
 	}
-	string GetEnding() const
+	const vector<string>& GetOptions() const
+	{
+		return option;
+	}
+	const string& GetEnding() const
 	{
 		return ending;
 	}
@@ -29,10 +33,6 @@ public:
 	void SetChoice(int cho)
 	{
 		choice = cho;
-	}
-	vector<string> GetOption() const
-	{
-		return option;
 	}
 };
 #endif

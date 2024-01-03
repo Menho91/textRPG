@@ -45,6 +45,7 @@ public:
 	PC(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
 	virtual int GetGivingGold() const { return 0; }
 	virtual int GetGivingExp() const { return 0; }
+	virtual const vector<Item>& GetGivingItem() const { return {}; }
 	int GetMaxHP() const { return maxHP; }
 	int GetMaxMP() const { return maxMP; }
 	bool GetIsDead() const { return isDead; }
@@ -83,9 +84,11 @@ class Monster : public PC
 private:
 	int givingGold;
 	int givingExp;
+	vector<Item> givingItem;
 public:
-	Monster(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
+	Monster(const string& names, int mhp = 10, int mmp = 10, int atk = 1, const vector<Item>& items = {});
 	virtual int GetGivingGold() const { return givingGold; }
 	virtual int GetGivingExp() const { return givingExp; }
+	virtual const vector<Item>& GetGivingItem() const { return givingItem; }
 };
 #endif

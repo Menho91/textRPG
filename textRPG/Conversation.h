@@ -8,11 +8,10 @@ class Conversation
 private:
 	string prompt;
 	vector<string> option;
-	string ending;
-	int choice;
+	vector<string> ending;
 public:
-	Conversation(const string& start, const vector<string>& options = {""}, const string& end = "")
-		: prompt(start), option(options), ending(end), choice(0)
+	Conversation(const string& start, const vector<string>& options = {}, const vector<string>& end = {})
+		: prompt(start), option(options), ending(end)
 	{ }
 	const string& GetPrompt() const
 	{
@@ -22,17 +21,9 @@ public:
 	{
 		return option;
 	}
-	const string& GetEnding() const
+	const vector<string>& GetEnding() const
 	{
 		return ending;
-	}
-	int GetChoice() const
-	{
-		return choice;
-	}
-	void SetChoice(int cho)
-	{
-		choice = cho;
 	}
 };
 #endif

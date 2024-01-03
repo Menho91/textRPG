@@ -12,17 +12,16 @@ void Village::Visit(Player& user)
 		user.SetCurrentVillage(1);
 		cout << endl;
 		cout << name << "에 도착했습니다. 무엇을 하시겠습니까?" << endl;
-		cout << "1. 숙소에서 쉬기	    2. 상점 가기    3. 주민과 대화하기    4. 이전 마을로 이동하기    5. 다음 마을로 이동하기" << endl;
-
+		cout << "1. 숙소에서 쉬기  2. 상점 가기  3. 주민과 대화하기  4. 이전 마을로 이동하기  5. 다음 마을로 이동하기  6. 현재 플레이어 정보 보기" << endl;
 		while (true)
 		{
 			cout << "선택 : "; cin >> choice; cin.ignore();
-			if (choice < 1 || choice > 5)
+			if (choice < 1 || choice > 6)
 				cout << "다시 선택해주세요." << endl << endl;
 			else
 				break;
 		}
-
+		cout << endl;
 		switch (choice)
 		{
 		case 1:
@@ -39,6 +38,9 @@ void Village::Visit(Player& user)
 			break;
 		case 5:
 			Travel(user, villageList[order]);
+			break;
+		case 6:
+			user.ShowInfo();
 			break;
 		}
 	}
@@ -59,6 +61,7 @@ void Village::Interact(Player& user)
 void Village::Sale(Player& user)
 {
 	int choice;
+	cout << "0. 구매하지 않는다." << endl;
 	for (int i = 0; i < itemlist.size(); i++)
 	{
 		cout << i + 1 << ". ";
@@ -68,9 +71,13 @@ void Village::Sale(Player& user)
 	while (true)
 	{
 		cout << "선택 : "; cin >> choice; cin.ignore();
-		if (choice >= itemlist.size() || choice < 1)
+		if (choice > itemlist.size() || choice < 0)
 		{
 			cout << "번호를 다시 입력해주세요." << endl;
+		}
+		else if (choice == 0)
+		{
+			return;
 		}
 		else
 		{
@@ -95,7 +102,7 @@ void Village::Travel(Player& user, Village& town)
 		if (p(60))
 		{
 			cout << "몬스터를 만났습니다." << endl << endl;
-			Monster* mon = new Monster((name + "의 몬스터"), order * 10 + p(), order * 10 + p(), order);
+			Monster* mon = new Monster((name + "의 몬스터"), order * 20 + p(), order * 20 + p(), order + 2, {hunting_token, basic_armor});
 			user.Fight(*mon);
 			delete mon;
 			if (user.GetIsDead())
@@ -115,8 +122,8 @@ void Village::Travel(Player& user, Village& town)
 }
 
 Village dlfqjs("일번 마을", 1, 3, {basic_sword}, garam);
-Village dlqjs("이번 마을", 2, 4, {}, nara);
-Village tkaqjs("삼번 마을", 3, 5, {}, daeum);
-Village tkqjs("사번 마을", 4, 6, {}, rara);
-Village dhqjs("오번 마을", 5, 7, {}, mari);
+Village dlqjs("이번 마을", 2, 5, {basic_armor}, nara);
+Village tkaqjs("삼번 마을", 3, 7, {basic_sword, basic_armor}, daeum);
+Village tkqjs("사번 마을", 4, 9, {basic_sword, basic_armor}, rara);
+Village dhqjs("오번 마을", 5, 11, {}, mari);
 vector<Village> villageList = { dlfqjs, dlqjs, tkaqjs, tkqjs, dhqjs };

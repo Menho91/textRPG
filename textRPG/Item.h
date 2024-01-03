@@ -53,6 +53,6 @@ private:
 public:
 	void AddItem(const Item& itm, int quant = 1);
 	bool RemoveItem(int index);
-	void ShowInventory();
+	void ShowInventory() const;
 };
 #endif

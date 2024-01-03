@@ -12,19 +12,25 @@ NPC::NPC(const string& names, Conversation conv)
 void NPC::StartConversation()
 {
 	int choice;
+	vector<string> str = {};
 	cout << GetName() << " : " << talk.GetPrompt() << endl;
-	for (int i = 0; i < talk.GetOptions().size(); i++)
+	if (talk.GetOptions() != str)
 	{
-		cout << i + 1 << " : " << talk.GetOptions()[i] << " ";
+		for (int i = 0; i < talk.GetOptions().size(); i++)
+		{
+			cout << i + 1 << " : " << talk.GetOptions()[i] << " ";
+		}
+		cout << endl << "선택 : "; cin >> choice; cin.ignore();
 	}
-	cout << endl << "선택 : "; cin >> choice; cin.ignore();
-	talk.SetChoice(choice);
-	cout << GetName() << " : " << talk.GetEnding() << endl;
+	if (talk.GetEnding() != str)
+	{
+		cout << GetName() << " : " << talk.GetEnding()[choice - 1] << endl;
+	}
 }
 
 NPC garam("가람", Conversation("처음 모험을 시작한다고? 재미있겠네."));
-NPC nara("나라", Conversation("여기까지 왔으면 풋내기는 아니겠네."));
-NPC daeum("다음", Conversation("나도 모험을 떠나고 싶어!"));
+NPC nara("나라", Conversation("나도 모험을 떠나고 싶어!"));
+NPC daeum("다음", Conversation("넌 어디까지 가고 있는 거야?", {"나도 몰라.", "이 세계의 끝까지!"}, {"참 용기있네.", "와, 멋있다!"}));
 NPC rara("라라", Conversation("이 앞은 강력한 몬스터가 나온다고."));
 NPC mari("마리", Conversation("난 최강이다."));
 
@@ -62,6 +68,7 @@ void PC::Attack(PC& pc)
 
 void PC::ShowInfo() const
 {
+	cout << "[ " << GetName() << " ]" << endl;
 	cout << "체력 : " << health << "/" << maxHP << " 마력 : " << magic << "/" << maxMP
 		<<" 공격력 : " << attack << endl;
 }
@@ -138,11 +145,12 @@ void Player::LevelUP()
 	maxMP += 10;
 	HealHP(maxHP);
 	HealMP(maxMP);
+	attack += 2;
 }
 
 void Player::Fight(PC& enemy)
 {
-	
+	Probability p;
 	while (!(isDead) && !(enemy.GetIsDead()))
 	{
 		Attack(enemy);
@@ -158,6 +166,13 @@ void Player::Fight(PC& enemy)
 	{
 		IncreaseExp(enemy.GetGivingExp());
 		IncreaseGold(enemy.GetGivingGold());
+		for (int i = 0; i < enemy.GetGivingItem().size(); i++)
+		{
+			if (p(20))
+			{
+				inven.AddItem(enemy.GetGivingItem()[i]);
+			}
+		}
 	}
 	else
 	{
@@ -174,14 +189,23 @@ void Player::SetCurrentVillage(int order)
 void Player::ShowInfo() const
 {
 	PC::ShowInfo();
-	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl;
+	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl << endl;
+	inven.ShowInventory();
 }
 
 
-Monster::Monster(const string& names, int mhp, int mmp, int atk)
-	: PC(names, mhp, mmp, atk)
+Monster::Monster(const string& names, int mhp, int mmp, int atk, const vector<Item>& items)
+	: PC(names, mhp, mmp, atk), givingItem(items)
 {
 	Probability p;
-	givingGold = (mhp * 50) + p();
+	givingGold = (mhp * 20) + p();
 	givingExp = mhp * 2 + p();
+	if (givingGold < 0)
+	{
+		givingGold = 0;
+	}
+	if (givingExp < 0)
+	{
+		givingExp = 0;
+	}
 }

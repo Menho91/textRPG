@@ -13,10 +13,15 @@ public:
 	Item(const string& names = NULL, const string& des = NULL, int cost = 0);
 	const string& GetName() const { return name; }
 	int GetValue() const { return value; }
+	virtual int GetShiftHP() const { return 0; }
+	virtual int GetShiftMP() const { return 0; }
+	virtual int GetShiftATK() const { return 0; }
 	virtual void ShowItemInfo() const;
 	virtual void ShowItemSalesInfo() const;
 	virtual void ShowItemDetailInfo() const;
 };
+
+extern Item hunting_token;
 
 class Armor : public Item
 {
@@ -26,15 +31,16 @@ private:
 	int shiftATK;
 public:
 	Armor(const string& names, const string& des, int hp = 0, int mp = 0, int atk = 0, int cost = 0);
-	virtual void ShowItemInfo()const ;
+	virtual int GetShiftHP() const { return shiftHP; }
+	virtual int GetShiftMP() const { return shiftMP; }
+	virtual int GetShiftATK() const { return shiftATK; }
+	virtual void ShowItemInfo() const;
 	virtual void ShowItemSalesInfo() const;
 	virtual void ShowItemDetailInfo() const;
 };
 
-extern Item hunting_token;
 extern Armor basic_sword;
 extern Armor basic_armor;
-
 
 struct InventoryItem
 {
@@ -52,7 +58,7 @@ private:
 	vector<InventoryItem> arr;
 public:
 	void AddItem(const Item& itm, int quant = 1);
-	bool RemoveItem(int index);
+	bool RemoveItem(const Item& itm, int quant = 1);
 	void ShowInventory() const;
 };
 #endif

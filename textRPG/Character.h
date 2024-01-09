@@ -43,14 +43,11 @@ protected:
 	bool isDead;
 public:
 	PC(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
-	virtual int GetGivingGold() const { return 0; }
-	virtual int GetGivingExp() const { return 0; }
-	virtual const vector<Item>& GetGivingItem() const { return {}; }
 	int GetMaxHP() const { return maxHP; }
 	int GetMaxMP() const { return maxMP; }
 	bool GetIsDead() const { return isDead; }
 	void SetIsDead(bool dead);
-	void Attack(PC& pc);
+	void Attack(PC& pc) const;
 	virtual void ShowInfo() const;
 };
 
@@ -68,6 +65,7 @@ public:
 	Inventory& GetInventory() { return inven; }
 	void HealHP(int hp);
 	void HealMP(int mp);
+	void IncreaseAbility(Item& item);
 	void IncreaseGold(int value);
 	bool DecreaseGold(int value);
 	void IncreaseExp(int value);
@@ -90,5 +88,6 @@ public:
 	virtual int GetGivingGold() const { return givingGold; }
 	virtual int GetGivingExp() const { return givingExp; }
 	virtual const vector<Item>& GetGivingItem() const { return givingItem; }
+	void Defeat(Player& user);
 };
 #endif

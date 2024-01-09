@@ -11,14 +11,14 @@ NPC::NPC(const string& names, Conversation conv)
 
 void NPC::StartConversation()
 {
-	int choice;
+	int choice = 1;
 	vector<string> str = {};
 	cout << GetName() << " : " << talk.GetPrompt() << endl;
 	if (talk.GetOptions() != str)
 	{
 		for (int i = 0; i < talk.GetOptions().size(); i++)
 		{
-			cout << i + 1 << " : " << talk.GetOptions()[i] << " ";
+			cout << i + 1 << " : " << talk.GetOptions()[i] << "    ";
 		}
 		cout << endl << "선택 : "; cin >> choice; cin.ignore();
 	}
@@ -44,7 +44,7 @@ void PC::SetIsDead(bool dead)
 	isDead = dead;
 }
 
-void PC::Attack(PC& pc)
+void PC::Attack(PC& pc) const
 {
 	Probability p;
 	cout << GetName() << "의 차례" << endl;
@@ -103,22 +103,18 @@ void Player::HealMP(int mp)
 	cout << "마나가 " << mp << " 회복되었습니다. 현재 마나 : " << magic << endl;
 }
 
+void Player::IncreaseAbility(Item& item)
+{
+	maxHP += item.GetShiftHP();
+	maxMP += item.GetShiftMP();
+	attack += item.GetShiftATK();
+}
+
 void Player::IncreaseGold(int value)
 {
 	cout << value << " 골드를 획득했습니다." << endl;
 	gold += value;
 	cout << "현재 골드 : " << gold << endl << endl;
-}
-
-void Player::IncreaseExp(int value)
-{
-	cout << value << " 경험치를 획득했습니다." << endl;
-	exp += value;
-	if (exp >= 100 + ((level - 1) * 10))
-	{
-		LevelUP();
-	}
-	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl << endl;
 }
 
 bool Player::DecreaseGold(int value)
@@ -134,6 +130,17 @@ bool Player::DecreaseGold(int value)
 		cout << value << " 골드를 차감했습니다. 남은 골드 : " << gold << endl;
 		return true;
 	}
+}
+
+void Player::IncreaseExp(int value)
+{
+	cout << value << " 경험치를 획득했습니다." << endl;
+	exp += value;
+	if (exp >= 100 + ((level - 1) * 10))
+	{
+		LevelUP();
+	}
+	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl << endl;
 }
 
 void Player::LevelUP()
@@ -164,15 +171,7 @@ void Player::Fight(PC& enemy)
 	cout << "전투가 끝났습니다." << endl << endl;
 	if (enemy.GetIsDead())
 	{
-		IncreaseExp(enemy.GetGivingExp());
-		IncreaseGold(enemy.GetGivingGold());
-		for (int i = 0; i < enemy.GetGivingItem().size(); i++)
-		{
-			if (p(20))
-			{
-				inven.AddItem(enemy.GetGivingItem()[i]);
-			}
-		}
+		dynamic_cast<Monster&>(enemy).Defeat(*this);
 	}
 	else
 	{
@@ -207,5 +206,21 @@ Monster::Monster(const string& names, int mhp, int mmp, int atk, const vector<It
 	if (givingExp < 0)
 	{
 		givingExp = 0;
+	}
+}
+
+void Monster::Defeat(Player& user)
+{
+	Probability p;
+	user.IncreaseExp(givingExp);
+	user.IncreaseGold(givingGold);
+	user.GetInventory().AddItem(hunting_token);
+	for (int i = 0; i < givingItem.size(); i++)
+	{
+		if (p(20))
+		{
+			user.GetInventory().AddItem(givingItem[i]);
+			user.IncreaseAbility(givingItem[i]);
+		}
 	}
 }

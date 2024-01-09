@@ -4,7 +4,6 @@ Item::Item(const string& names, const string& des, int cost)
 	: name(names), description(des), value(cost)
 { }
 
-
 void Item::ShowItemInfo() const
 {
 	cout << "[" << name << "]" << endl;
@@ -21,6 +20,7 @@ void Item::ShowItemDetailInfo() const
 	cout << description << endl;
 }
 
+Item hunting_token("사냥의 증표", "몬스터를 사냥하면 얻을 수 있는 증표.");
 
 
 Armor::Armor(const string& names, const string& des, int hp, int mp, int atk, int cost)
@@ -45,9 +45,8 @@ void Armor::ShowItemDetailInfo() const
 	cout << showpos << "HP " << shiftHP << "	MP " << shiftMP << "	ATK " << shiftATK << endl;
 }
 
-Item hunting_token("사냥의 증표", "몬스터를 사냥하면 얻을 수 있는 증표. 10개를 모아서 돌아가자.");
-Armor basic_sword("기본 검", "기본적인 검이다.", 0, 0, 1, 500);
-Armor basic_armor("기본 갑옷", "기본적인 갑옷이다.", 5, 0, 0, 500);
+Armor basic_sword("기본 검", "기본적인 검이다.", 0, 0, 1, 1000);
+Armor basic_armor("기본 갑옷", "기본적인 갑옷이다.", 5, 0, 0, 1000);
 
 
 void Inventory::AddItem(const Item& itm, int quant)
@@ -64,15 +63,27 @@ void Inventory::AddItem(const Item& itm, int quant)
 	cout << itm.GetName() << " " << quant << "개 획득했습니다." << endl << endl;
 }
 
-bool Inventory::RemoveItem(int index)
+bool Inventory::RemoveItem(const Item& itm, int quant)
 {
-	if (index >= arr.size())
+	for (InventoryItem& i : arr)
 	{
-		return false;
+		if (i.item.GetName() == itm.GetName())
+		{
+			if (i.quantity < quant)
+			{
+				cout << "아이템 개수가 부족합니다." << endl << endl;
+				return false;
+			}
+			else
+			{
+				i.quantity -= quant;
+				cout << itm.GetName() << " " << quant << "개 만큼 줬습니다. 남은 개수 : " << i.quantity << endl << endl;
+				return true;
+			}
+		}
 	}
-	arr[index].item.ShowItemInfo();
-	arr.erase(arr.begin() + index);
-	return true;
+	cout << "가지고 있지 않은 아이템입니다." << endl << endl;
+	return false;
 }
 
 void Inventory::ShowInventory() const

@@ -52,6 +52,7 @@ public:
 };
 
 
+class Monster;
 class Player : public PC
 {
 private:
@@ -65,12 +66,12 @@ public:
 	Inventory& GetInventory() { return inven; }
 	void HealHP(int hp);
 	void HealMP(int mp);
-	void IncreaseAbility(Item& item);
+	void IncreaseAbility(Armor& arm);
 	void IncreaseGold(int value);
 	bool DecreaseGold(int value);
 	void IncreaseExp(int value);
 	void LevelUP();
-	void Fight(PC& enemy);
+	void Fight(Monster& enemy);
 	int GetCurrentVillage() const { return currentVillage; }
 	void SetCurrentVillage(int order);
 	virtual void ShowInfo() const;

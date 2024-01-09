@@ -56,6 +56,7 @@ void Inventory::AddItem(const Item& itm, int quant)
 		if (i.item.GetName() == itm.GetName())
 		{
 			i.quantity += quant;
+			cout << itm.GetName() << " " << quant << "°³ È¹µæÇß½À´Ï´Ù." << endl << endl;
 			return;
 		}
 	}
@@ -92,7 +93,7 @@ void Inventory::ShowInventory() const
 	for (int i = 0; i < arr.size(); i++)
 	{
 		cout << i + 1 << ". ";
-		arr[i].item.ShowItemInfo();
+		arr[i].item.ShowItemDetailInfo();
 		cout << "      ->" << arr[i].quantity << "°³" << endl;
 	}
 	cout << endl;

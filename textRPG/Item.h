@@ -13,9 +13,6 @@ public:
 	Item(const string& names = NULL, const string& des = NULL, int cost = 0);
 	const string& GetName() const { return name; }
 	int GetValue() const { return value; }
-	virtual int GetShiftHP() const { return 0; }
-	virtual int GetShiftMP() const { return 0; }
-	virtual int GetShiftATK() const { return 0; }
 	virtual void ShowItemInfo() const;
 	virtual void ShowItemSalesInfo() const;
 	virtual void ShowItemDetailInfo() const;
@@ -31,9 +28,9 @@ private:
 	int shiftATK;
 public:
 	Armor(const string& names, const string& des, int hp = 0, int mp = 0, int atk = 0, int cost = 0);
-	virtual int GetShiftHP() const { return shiftHP; }
-	virtual int GetShiftMP() const { return shiftMP; }
-	virtual int GetShiftATK() const { return shiftATK; }
+	int GetShiftHP() const { return shiftHP; }
+	int GetShiftMP() const { return shiftMP; }
+	int GetShiftATK() const { return shiftATK; }
 	virtual void ShowItemInfo() const;
 	virtual void ShowItemSalesInfo() const;
 	virtual void ShowItemDetailInfo() const;

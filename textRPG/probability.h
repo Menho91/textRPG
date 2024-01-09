@@ -25,7 +25,7 @@ public:
 	}
 	int operator()()
 	{
-		return (GetRandomNumber() / 5) - 10;
+		return (GetRandomNumber() / 5);
 	}
 };
 #endif

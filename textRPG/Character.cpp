@@ -103,11 +103,12 @@ void Player::HealMP(int mp)
 	cout << "마나가 " << mp << " 회복되었습니다. 현재 마나 : " << magic << endl;
 }
 
-void Player::IncreaseAbility(Item& item)
+void Player::IncreaseAbility(Armor& arm)
 {
-	maxHP += item.GetShiftHP();
-	maxMP += item.GetShiftMP();
-	attack += item.GetShiftATK();
+	cout << "?????????" << endl;
+	maxHP += arm.GetShiftHP();
+	maxMP += arm.GetShiftMP();
+	attack += arm.GetShiftATK();
 }
 
 void Player::IncreaseGold(int value)
@@ -136,26 +137,26 @@ void Player::IncreaseExp(int value)
 {
 	cout << value << " 경험치를 획득했습니다." << endl;
 	exp += value;
-	if (exp >= 100 + ((level - 1) * 10))
+	if (exp >= 100 * level)
 	{
 		LevelUP();
 	}
-	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl << endl;
+	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 * level << endl << endl;
 }
 
 void Player::LevelUP()
 {
-	exp -= 100 + ((level - 1) * 10);
+	exp -= 100 * level;
 	level += 1;
 	cout << "레벨업 했습니다." << endl;
 	maxHP += 10;
 	maxMP += 10;
 	HealHP(maxHP);
 	HealMP(maxMP);
-	attack += 2;
+	attack += 1;
 }
 
-void Player::Fight(PC& enemy)
+void Player::Fight(Monster& enemy)
 {
 	Probability p;
 	while (!(isDead) && !(enemy.GetIsDead()))
@@ -171,7 +172,7 @@ void Player::Fight(PC& enemy)
 	cout << "전투가 끝났습니다." << endl << endl;
 	if (enemy.GetIsDead())
 	{
-		dynamic_cast<Monster&>(enemy).Defeat(*this);
+		enemy.Defeat(*this);
 	}
 	else
 	{
@@ -188,7 +189,8 @@ void Player::SetCurrentVillage(int order)
 void Player::ShowInfo() const
 {
 	PC::ShowInfo();
-	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 + ((level - 1) * 10) << endl << endl;
+	cout << "레벨 : " << level << " 경험치 : " << exp << "/" << 100 * level << endl;
+	cout << "현재 골드 : " << gold << endl << endl;
 	inven.ShowInventory();
 }
 
@@ -197,16 +199,8 @@ Monster::Monster(const string& names, int mhp, int mmp, int atk, const vector<It
 	: PC(names, mhp, mmp, atk), givingItem(items)
 {
 	Probability p;
-	givingGold = (mhp * 20) + p();
-	givingExp = mhp * 2 + p();
-	if (givingGold < 0)
-	{
-		givingGold = 0;
-	}
-	if (givingExp < 0)
-	{
-		givingExp = 0;
-	}
+	givingGold = (mhp * 10) + p();
+	givingExp = mhp + p();
 }
 
 void Monster::Defeat(Player& user)
@@ -220,7 +214,12 @@ void Monster::Defeat(Player& user)
 		if (p(20))
 		{
 			user.GetInventory().AddItem(givingItem[i]);
-			user.IncreaseAbility(givingItem[i]);
+			Armor* temp = dynamic_cast<Armor*>(&(givingItem[i]));
+			if (temp != nullptr)
+			{
+				user.IncreaseAbility(dynamic_cast<Armor&>(givingItem[i]));
+			}
+			delete temp;
 		}
 	}
 }

@@ -92,21 +92,21 @@ void Village::Sale(Player& user)
 
 void Village::Travel(Player& user, Village& town)
 {
-	cout << town.name << "까지 이동합니다. 남은 이동 수 " << town.road << endl;
+	cout << town.name << "까지 이동합니다. 남은 이동 수 " << town.road << endl << endl;
 	for (int i = 0; i < town.road; i++)
 	{
 		Probability p;
 		if (p(60))
 		{
 			cout << "몬스터를 만났습니다." << endl << endl;
-			Monster* mon = new Monster((name + "의 몬스터"), order * 20 + p(), order * 20 + p(), order * 3, {hunting_token, basic_armor});
+			Monster* mon = new Monster((name + "의 몬스터"), order * 10 + p(), order * 20 + p(), order * 2, {basic_sword, basic_armor});
 			user.Fight(*mon);
-			delete mon;
 			if (user.GetIsDead())
 			{
 				user.SetIsDead(false);
 				return;
 			}
+			delete mon;
 		}
 		else
 		{

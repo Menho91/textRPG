@@ -195,8 +195,8 @@ void Player::ShowInfo() const
 }
 
 
-Monster::Monster(const string& names, int mhp, int mmp, int atk, const vector<Item>& items)
-	: PC(names, mhp, mmp, atk), givingItem(items)
+Monster::Monster(const string& names, int mhp, int mmp, int atk, const vector<Armor>& arms)
+	: PC(names, mhp, mmp, atk), givingArmor(arms)
 {
 	Probability p;
 	givingGold = (mhp * 10) + p();
@@ -209,17 +209,12 @@ void Monster::Defeat(Player& user)
 	user.IncreaseExp(givingExp);
 	user.IncreaseGold(givingGold);
 	user.GetInventory().AddItem(hunting_token);
-	for (int i = 0; i < givingItem.size(); i++)
+	for (int i = 0; i < givingArmor.size(); i++)
 	{
 		if (p(20))
 		{
-			user.GetInventory().AddItem(givingItem[i]);
-			Armor* temp = dynamic_cast<Armor*>(&(givingItem[i]));
-			if (temp != nullptr)
-			{
-				user.IncreaseAbility(dynamic_cast<Armor&>(givingItem[i]));
-			}
-			delete temp;
+			user.GetInventory().AddItem(givingArmor[i]);
+			user.IncreaseAbility(givingArmor[i]);
 		}
 	}
 }

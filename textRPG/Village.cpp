@@ -99,7 +99,7 @@ void Village::Travel(Player& user, Village& town)
 		if (p(60))
 		{
 			cout << "몬스터를 만났습니다." << endl << endl;
-			Monster* mon = new Monster((name + "의 몬스터"), order * 10 + p(), order * 20 + p(), order * 2, {basic_sword, basic_armor});
+			Monster* mon = new Monster((name + "의 몬스터"), order * order * 10 + p(), order * order * 10 + p(), order * order * 3, {basic_sword, basic_armor});
 			user.Fight(*mon);
 			if (user.GetIsDead())
 			{

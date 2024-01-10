@@ -83,12 +83,12 @@ class Monster : public PC
 private:
 	int givingGold;
 	int givingExp;
-	vector<Item> givingItem;
+	vector<Armor> givingArmor;
 public:
-	Monster(const string& names, int mhp = 10, int mmp = 10, int atk = 1, const vector<Item>& items = {});
+	Monster(const string& names, int mhp = 10, int mmp = 10, int atk = 1, const vector<Armor>& arms = {});
 	virtual int GetGivingGold() const { return givingGold; }
 	virtual int GetGivingExp() const { return givingExp; }
-	virtual const vector<Item>& GetGivingItem() const { return givingItem; }
+	virtual const vector<Armor>& GetGivingItem() const { return givingArmor; }
 	void Defeat(Player& user);
 };
 #endif

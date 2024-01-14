@@ -4,6 +4,7 @@
 #include "CommonInclude.h"
 #include "Conversation.h"
 #include "Item.h"
+#include "Skill.h"
 #include "Probability.h"
 
 class Character
@@ -47,7 +48,7 @@ public:
 	int GetMaxMP() const { return maxMP; }
 	bool GetIsDead() const { return isDead; }
 	void SetIsDead(bool dead);
-	void Attack(PC& pc) const;
+	virtual void Attack(PC& pc);
 	virtual void ShowInfo() const;
 };
 
@@ -61,6 +62,7 @@ private:
 	int level;
 	int currentVillage;
 	Inventory inven;
+	SkillInven skillList;
 public:
 	Player(const string& names, int mhp = 20, int mmp = 20, int atk = 2);
 	Inventory& GetInventory() { return inven; }
@@ -71,6 +73,8 @@ public:
 	bool DecreaseGold(int value);
 	void IncreaseExp(int value);
 	void LevelUP();
+	bool UseSkill(Skill& skill);
+	virtual void Attack(PC& pc);
 	void Fight(Monster& enemy);
 	int GetCurrentVillage() const { return currentVillage; }
 	void SetCurrentVillage(int order);

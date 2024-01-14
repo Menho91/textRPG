@@ -44,7 +44,7 @@ void PC::SetIsDead(bool dead)
 	isDead = dead;
 }
 
-void PC::Attack(PC& pc) const
+void PC::Attack(PC& pc)
 {
 	Probability p;
 	cout << GetName() << "의 차례" << endl;
@@ -105,7 +105,6 @@ void Player::HealMP(int mp)
 
 void Player::IncreaseAbility(Armor& arm)
 {
-	cout << "?????????" << endl;
 	maxHP += arm.GetShiftHP();
 	maxMP += arm.GetShiftMP();
 	attack += arm.GetShiftATK();
@@ -146,14 +145,47 @@ void Player::IncreaseExp(int value)
 
 void Player::LevelUP()
 {
+	cout << "레벨업 했습니다." << endl;
 	exp -= 100 * level;
 	level += 1;
-	cout << "레벨업 했습니다." << endl;
 	maxHP += 10;
 	maxMP += 10;
 	HealHP(maxHP);
 	HealMP(maxMP);
 	attack += 1;
+	if (level == 5)
+	{
+		skillList.AddSkill(strong_attack);
+		cout << "새로운 스킬을 배웠습니다." << endl;
+		strong_attack.ShowSkillInfo();
+	}
+	if (level == 10)
+	{
+		skillList.AddSkill(final_attack);
+		cout << "새로운 스킬을 배웠습니다." << endl;
+		final_attack.ShowSkillInfo();
+	}
+	cout << endl;
+}
+
+bool Player::UseSkill(Skill& skill)
+{
+	if (magic < skill.GetRequiredMP())
+	{
+		cout << "마나가 부족합니다. 현재 마나 : " << magic << " / " << maxMP << endl << endl;
+		return false;
+	}
+	else
+	{
+		magic -= skill.GetRequiredMP();
+		cout << "남은 마나 : " << magic << " / " << maxMP << endl << endl;
+		return true;
+	}
+}
+
+void Player::Attack(PC& pc)
+{
+
 }
 
 void Player::Fight(Monster& enemy)

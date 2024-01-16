@@ -46,8 +46,11 @@ public:
 	PC(const string& names, int mhp = 10, int mmp = 10, int atk = 1);
 	int GetMaxHP() const { return maxHP; }
 	int GetMaxMP() const { return maxMP; }
+	int GetHealth() const { return health; }
+	void SetHealth(int value);
 	bool GetIsDead() const { return isDead; }
 	void SetIsDead(bool dead);
+	void DecreaseHealth(int value);
 	virtual void Attack(PC& pc);
 	virtual void ShowInfo() const;
 };

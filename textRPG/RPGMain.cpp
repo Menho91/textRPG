@@ -4,13 +4,14 @@
 int main(void)
 {
 	int choice;
-	cout << "text RPG" << endl;
+	cout << "text RPG" << endl << endl;
+	cout << "1. 시작하기" << endl;
+	cout << "2. 종료하기" << endl;
+	cout << "선택 : ";
 	while (true)
 	{
+		choice = Choice(1, 2);
 		cout << endl;
-		cout << "1. 시작하기" << endl;
-		cout << "2. 종료하기" << endl;
-		cout << "선택 : "; cin >> choice; cin.ignore();
 
 		switch (choice)
 		{
@@ -27,8 +28,7 @@ int main(void)
 			cout << "종료합니다." << endl;
 			return 0;
 		default:
-			cout << "유효하지 않은 숫자입니다. 다시 입력해주세요." << endl;
-			throw -1;
+			cout << "다시 입력해주세요." << endl;
 		}
 	}
 	return 0;

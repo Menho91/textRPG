@@ -199,39 +199,8 @@ void Player::Attack(PC& pc)
 		cout << i + 1 << ". ";
 		skillList[i].ShowSkillInfo();
 	}
-	while (true)
-	{
-		cout << "선택 : ";
-		try
-		{
-			if (cin >> choice)
-			{
-				if (choice >= 1 && choice <= skillList.size())
-				{
-					break;
-				}
-				else
-				{
-					throw out_of_range("범위를 초과하였습니다.");
-				}
-			}
-			else
-			{
-				throw invalid_argument("알 수 없는 오류입니다.");
-			}
-		}
-		catch (const out_of_range& e)
-		{
-			cout << e.what() << " 다시 선택해주세요." << endl;
-		}
-		catch (const invalid_argument& e)
-		{
-			cout << e.what() << " 숫자만 넣어주세요." << endl;
-			cin.clear();
-			cin.ignore(INT_MAX, '\n');
-		}
-	}
 
+	choice = Choice(1, skillList.size());
 	cout << endl;
 
 	if (UseSkill(skillList[choice - 1]))

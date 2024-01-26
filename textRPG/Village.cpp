@@ -13,15 +13,41 @@ void Village::Visit(Player& user)
 		cout << endl;
 		cout << name << "에 도착했습니다. 무엇을 하시겠습니까?" << endl;
 		cout << "1. 숙소에서 쉬기  2. 상점 가기  3. 주민과 대화하기  4. 다음 마을로 이동하기  5. 현재 플레이어 정보 보기" << endl;
+		cout << "선택 : ";
 		while (true)
 		{
-			cout << "선택 : "; cin >> choice; cin.ignore();
-			if (choice < 1 || choice > 5)
-				cout << "다시 선택해주세요." << endl << endl;
-			else
-				break;
+			try
+			{
+				if (cin >> choice)
+				{
+					if (choice >= 1 && choice <= 5)
+					{
+						break;
+					}
+					else
+					{
+						throw out_of_range("범위를 초과하였습니다.");
+					}
+				}
+				else
+				{
+					throw invalid_argument("알 수 없는 오류입니다.");
+				}
+			}
+			catch (const out_of_range& e)
+			{
+				cout << e.what() << " 다시 선택해주세요." << endl;
+			}
+			catch (const invalid_argument& e)
+			{
+				cout << e.what() << " 숫자만 넣어주세요." << endl;
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+			}
 		}
+
 		cout << endl;
+
 		switch (choice)
 		{
 		case 1:
@@ -65,21 +91,13 @@ void Village::Sale(Player& user)
 		itemlist[i].ShowItemSalesInfo();
 	}
 	cout << endl << "어떤 것을 구매하시겠습니까?" << endl;
-	while (true)
+
+	choice = Choice(0, itemlist.size());
+	cout << endl;
+
+	if (choice == 0)
 	{
-		cout << "선택 : "; cin >> choice; cin.ignore();
-		if (choice > itemlist.size() || choice < 0)
-		{
-			cout << "번호를 다시 입력해주세요." << endl;
-		}
-		else if (choice == 0)
-		{
-			return;
-		}
-		else
-		{
-			break;
-		}
+		return;
 	}
 	if (user.DecreaseGold(itemlist[choice - 1].GetValue()))
 	{

@@ -20,7 +20,7 @@ void NPC::StartConversation()
 		{
 			cout << i + 1 << " : " << talk.GetOptions()[i] << "    ";
 		}
-		cout << endl << "선택 : "; cin >> choice; cin.ignore();
+		cout << endl << "선택 : "; cin >> choice; cin.ignore(INT_MAX, '\n');
 	}
 	if (talk.GetEnding() != str)
 	{
@@ -201,17 +201,39 @@ void Player::Attack(PC& pc)
 	}
 	while (true)
 	{
-		cout << "선택 : "; cin >> choice; cin.ignore();
-		if (choice < 1 || choice > skillList.size())
+		cout << "선택 : ";
+		try
 		{
-			cout << "다시 선택해주세요." << endl;
+			if (cin >> choice)
+			{
+				if (choice >= 1 && choice <= skillList.size())
+				{
+					break;
+				}
+				else
+				{
+					throw out_of_range("범위를 초과하였습니다.");
+				}
+			}
+			else
+			{
+				throw invalid_argument("알 수 없는 오류입니다.");
+			}
 		}
-		else
+		catch (const out_of_range& e)
 		{
-			break;
+			cout << e.what() << " 다시 선택해주세요." << endl;
+		}
+		catch (const invalid_argument& e)
+		{
+			cout << e.what() << " 숫자만 넣어주세요." << endl;
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
 		}
 	}
+
 	cout << endl;
+
 	if (UseSkill(skillList[choice - 1]))
 	{
 		if (p(30))

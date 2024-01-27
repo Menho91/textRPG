@@ -1,16 +1,16 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
 #include <windows.h>
 using namespace std;
 
-int Choice(int left, int right)
+static int Choice(int left, int right)
 {
 	int choice;
-	cout << "선택 : ";
-	
 	while (true)
 	{
+		cout << "선택 : ";
 		try
 		{
 			if (cin >> choice)
@@ -40,6 +40,5 @@ int Choice(int left, int right)
 			cin.ignore(INT_MAX, '\n');
 		}
 	}
-
 	return choice;
 }

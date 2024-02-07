@@ -28,11 +28,11 @@ void NPC::StartConversation()
 	}
 }
 
-NPC garam("가람", Conversation("처음 모험을 시작한다고? 재미있겠네."));
-NPC nara("나라", Conversation("나도 모험을 떠나고 싶어!"));
-NPC daeum("다음", Conversation("넌 어디까지 가고 있는 거야?", {"나도 몰라.", "이 세계의 끝까지!"}, {"참 용기있네.", "와, 멋있다!"}));
-NPC rara("라라", Conversation("이 앞은 강력한 몬스터가 나온다고."));
-NPC mari("마리", Conversation("난 최강이다."));
+NPC Iris_NPC("이리스", Conversation("몬스터가 너무 세다면 상점에서 장비를 사봐. 더 강해질 수 있어."));
+NPC Leah_NPC("레아", Conversation("나도 모험을 떠나고 싶어!"));
+NPC Greyson_NPC("그레이슨", Conversation("넌 목표가 뭐야?", {"이 세계를 정복해야지.", "계속 모험을 즐기는 거야."}, {"음... 멋있네.", "하하. 즐길만큼 즐기고 나중에 내 일도 도와줘."}));
+NPC Henry_NPC("헨리", Conversation("점점 더 강한 몬스터가 나와. 장비를 점검하는 게 좋겠어."));
+NPC Genesis_NPC("제네시스", Conversation("여기까지 오다니. 너도 제법 강하구나?"));
 
 
 PC::PC(const string& names, int mhp, int mmp, int atk)
@@ -282,7 +282,7 @@ void Monster::Defeat(Player& user)
 	Probability p;
 	user.IncreaseExp(givingExp);
 	user.IncreaseGold(givingGold);
-	user.GetInventory().AddItem(hunting_token);
+	user.GetInventory().AddItem(HuntingToken_ITEM);
 	for (int i = 0; i < givingArmor.size(); i++)
 	{
 		if (p(20))

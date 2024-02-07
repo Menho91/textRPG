@@ -26,11 +26,11 @@ public:
 	void StartConversation();
 };
 
-extern NPC garam;
-extern NPC nara;
-extern NPC daeum;
-extern NPC rara;
-extern NPC mari;
+extern NPC Iris_NPC;
+extern NPC Leah_NPC;
+extern NPC Greyson_NPC;
+extern NPC Henry_NPC;
+extern NPC Genesis_NPC;
 
 
 class PC : public Character

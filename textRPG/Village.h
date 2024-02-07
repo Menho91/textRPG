@@ -22,10 +22,10 @@ public:
 	void Travel(Player& user, Village& town);
 };
 
-extern Village dlfqjs;
-extern Village dlqjs;
-extern Village tkaqjs;
-extern Village tkqjs;
-extern Village dhqjs;
+extern Village Wellspring_VILLAGE;
+extern Village Calchester_VILLAGE;
+extern Village Kineallen_VILLAGE;
+extern Village Porthcrawl_VILLAGE;
+extern Village Sanlow_VILLAGE;
 extern vector<Village> villageList;
 #endif

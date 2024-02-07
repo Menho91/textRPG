@@ -7,7 +7,6 @@ int main(void)
 	cout << "text RPG" << endl << endl;
 	cout << "1. 시작하기" << endl;
 	cout << "2. 종료하기" << endl;
-	cout << "선택 : ";
 	while (true)
 	{
 		choice = Choice(1, 2);

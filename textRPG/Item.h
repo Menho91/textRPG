@@ -18,7 +18,7 @@ public:
 	virtual void ShowItemDetailInfo() const;
 };
 
-extern Item hunting_token;
+extern Item HuntingToken_ITEM;
 
 class Armor : public Item
 {
@@ -36,8 +36,10 @@ public:
 	virtual void ShowItemDetailInfo() const;
 };
 
-extern Armor basic_sword;
-extern Armor basic_armor;
+extern Armor BasicSword_ARMOR;
+extern Armor StrongSword_ARMOR;
+extern Armor BasicArmor_ARMOR;
+extern Armor StrongArmor_ARMOR;
 
 struct InventoryItem
 {

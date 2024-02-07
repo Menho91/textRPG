@@ -13,39 +13,7 @@ void Village::Visit(Player& user)
 		cout << endl;
 		cout << name << "에 도착했습니다. 무엇을 하시겠습니까?" << endl;
 		cout << "1. 숙소에서 쉬기  2. 상점 가기  3. 주민과 대화하기  4. 다음 마을로 이동하기  5. 현재 플레이어 정보 보기" << endl;
-		cout << "선택 : ";
-		while (true)
-		{
-			try
-			{
-				if (cin >> choice)
-				{
-					if (choice >= 1 && choice <= 5)
-					{
-						break;
-					}
-					else
-					{
-						throw out_of_range("범위를 초과하였습니다.");
-					}
-				}
-				else
-				{
-					throw invalid_argument("알 수 없는 오류입니다.");
-				}
-			}
-			catch (const out_of_range& e)
-			{
-				cout << e.what() << " 다시 선택해주세요." << endl;
-			}
-			catch (const invalid_argument& e)
-			{
-				cout << e.what() << " 숫자만 넣어주세요." << endl;
-				cin.clear();
-				cin.ignore(INT_MAX, '\n');
-			}
-		}
-
+		choice = Choice(1, 5);
 		cout << endl;
 
 		switch (choice)
@@ -113,11 +81,12 @@ void Village::Travel(Player& user, Village& town)
 	cout << town.name << "까지 이동합니다. 남은 이동 수 " << town.road << endl << endl;
 	for (int i = 0; i < town.road; i++)
 	{
+		Sleep(1000);
 		Probability p;
 		if (p(60))
 		{
 			cout << "몬스터를 만났습니다." << endl << endl;
-			Monster* mon = new Monster((name + "의 몬스터"), order * order * 10 + p(), order * order * 10 + p(), order * order * 3, {basic_sword, basic_armor});
+			Monster* mon = new Monster((name + "의 몬스터"), order * order * 10 + p(), order * order * 10 + p(), order * order * 3, { BasicSword_ARMOR, BasicArmor_ARMOR });
 			user.Fight(*mon);
 			if (user.GetIsDead())
 			{
@@ -134,7 +103,7 @@ void Village::Travel(Player& user, Village& town)
 	}
 	cout << endl;
 
-	if (user.GetInventory().RemoveItem(hunting_token, 10) == true)
+	if (user.GetInventory().RemoveItem(HuntingToken_ITEM, 10) == true)
 	{
 		town.Visit(user);
 	}
@@ -145,9 +114,9 @@ void Village::Travel(Player& user, Village& town)
 	}
 }
 
-Village dlfqjs("일번 마을", 1, 3, {basic_sword}, garam);
-Village dlqjs("이번 마을", 2, 5, {basic_armor}, nara);
-Village tkaqjs("삼번 마을", 3, 7, {basic_sword, basic_armor}, daeum);
-Village tkqjs("사번 마을", 4, 9, {basic_sword, basic_armor}, rara);
-Village dhqjs("오번 마을", 5, 11, {}, mari);
-vector<Village> villageList = { dlfqjs, dlqjs, tkaqjs, tkqjs, dhqjs };
+Village Wellspring_VILLAGE("웰스프링", 1, 3, { BasicSword_ARMOR }, Iris_NPC);
+Village Calchester_VILLAGE("칼체스터", 2, 5, { BasicArmor_ARMOR }, Leah_NPC);
+Village Kineallen_VILLAGE("키넬른", 3, 7, { BasicSword_ARMOR, BasicArmor_ARMOR }, Greyson_NPC);
+Village Porthcrawl_VILLAGE("포스크롤", 4, 9, { BasicSword_ARMOR, BasicArmor_ARMOR }, Henry_NPC);
+Village Sanlow_VILLAGE("샌로우", 5, 11, { StrongSword_ARMOR, StrongArmor_ARMOR }, Genesis_NPC);
+vector<Village> villageList = { Wellspring_VILLAGE, Calchester_VILLAGE, Kineallen_VILLAGE, Porthcrawl_VILLAGE, Sanlow_VILLAGE };

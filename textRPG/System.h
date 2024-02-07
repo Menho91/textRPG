@@ -25,6 +25,6 @@ void Prologue(Player& player)
 
 void Start(Player& player)
 {
-	dlfqjs.Visit(player);
+	Wellspring_VILLAGE.Visit(player);
 }
 #endif
